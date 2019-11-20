@@ -22,7 +22,7 @@ Episode ends after each 1000 frames or when ball touchs the ground.
 - X and Y position of ball.
 - X and Y velocity of ball.
 
-### Rerard Function
+### Reward Function
 
 - `+3` when paddle hit the ball.
 - `-3` when ball touchs the ground.
