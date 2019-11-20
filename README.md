@@ -24,6 +24,6 @@ Episode ends after each 1000 frames or when ball touchs the ground.
 
 ### Rerard Function
 
-- +3 when paddle hit the ball.
-- -3 when ball touchs the ground.
-- -0.1 when paddle moves.
+- `+3` when paddle hit the ball.
+- `-3` when ball touchs the ground.
+- `-0.1` when paddle moves.
