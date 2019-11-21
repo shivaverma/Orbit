@@ -2,9 +2,9 @@ Orbit is a open-source project and a collection of reinforcement learning enviro
 
 # Environment 1: Paddle
 
-Library used - Turtle
+Library - Turtle.
 
-In this environment, the task is to hit the ball with paddle. 
+Task - To hit the ball with paddle. 
 
 <img src=paddle/wall.gif width="400">
 
