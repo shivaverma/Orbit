@@ -2,6 +2,8 @@ Orbit is a open-source project and a collection of reinforcement learning enviro
 
 # Environment 1: Paddle
 
+### Author: Shiva Verma
+
 The task to hit the ball with paddle. Inbuilt `turtle` library is used to create the environment.
 
 <img src=paddle/wall.gif width="400">
