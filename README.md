@@ -10,7 +10,7 @@ Orbit contains following RL environments as of today.
 
 The task to hit the ball with paddle. Inbuilt `turtle` library is used to create the environment.
 
-<img src=paddle/wall.gif width="400">
+<img src=environments/paddle/wall.gif width="400">
 
 ### Action space (3)
 
