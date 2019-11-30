@@ -1,12 +1,14 @@
 import random
 import turtle
 
+
 class JumpGame:
+
     def __init__(self):
         self.screen_width = 900
         self.screen_length = 400
         self.done = False
-        self.hit = self.miss = 0,
+        self.hit, self.miss = 0, 0
         self.scorecount = 0
         self.reward = 0
         self.triggered = False
@@ -22,7 +24,7 @@ class JumpGame:
         self.end = -90
         self.diff = (self.end - self.start) / (self.obs_size - 1)
 
-        self.color = ['orange', 'red', 'blue', 'grey']
+        self.color = ['orange', 'red', 'blue', 'green', 'yellow', 'cyan', 'purple', 'magenta']
         self.obs_height = [self.start + self.diff * i for i in range(self.obs_size)]
         self.obs = [turtle.Turtle() for i in range((self.obs_size * 3) // 2)]
 
@@ -46,7 +48,7 @@ class JumpGame:
         self.obstacle_speed = -3
 
         self.win.listen()
-        self.win.onkey(self.triggerjump, 'Up')
+        self.win.onkey(self.triggerjump, 'space')
 
         self.score = turtle.Turtle()
         self.score.speed(0)
@@ -62,14 +64,14 @@ class JumpGame:
             i.passed = False
             i.speed(0)
             i.shape('circle')  # Select a circle shape
-            i.color('blue')  # Set the color to red
+            i.color(random.choice(self.color))
             i.penup()
             i.goto(self.screen_width / 2, 0)
 
     def inializeTrext(self):
         self.t_rex.shape('square')  # Select a square shape
         self.t_rex.speed(0)
-        self.t_rex.shapesize(stretch_wid=2, stretch_len=2)  # Streach the length of square by 5
+        self.t_rex.shapesize(stretch_wid=1.6, stretch_len=1.6)  # Streach the length of square by 5
         self.t_rex.penup()
         self.t_rex.color('black')  # Set the color to white
         self.t_rex.setx(-350)
@@ -81,7 +83,7 @@ class JumpGame:
             i.passed = False
             i.speed(0)
             i.shape('circle')  # Select a circle shape
-            i.color('blue')  # Set the color to red
+            i.color(random.choice(self.color))
             i.penup()
             i.goto(self.screen_width / 2, 0)
 
@@ -130,14 +132,14 @@ class JumpGame:
                 if i.xcor() + self.obstacle_speed < -1 * self.screen_width / 2:
                     self.resetOb(i)
                 else:
-                    if abs(self.t_rex.xcor() - i.xcor()) <= 20 and abs(self.t_rex.ycor() - i.ycor()) <= 30:
+                    if abs(self.t_rex.xcor() - i.xcor()) <= 17 and abs(self.t_rex.ycor() - i.ycor()) <= 25:
                         self.done = True
-                        self.reward -= 10
                         self.reset()
                     elif not i.passed and self.t_rex.xcor() > i.xcor():
                         self.scorecount += 1
                         i.passed = True
                         i.setx(i.xcor() + self.obstacle_speed)
+                        self.reward += 5
                         self.updateScore()
                     else:
                         i.setx(i.xcor() + self.obstacle_speed)
@@ -169,7 +171,7 @@ class JumpGame:
         self.resetObs()
         self.resetTrex()
         self.resetScore()
-        state = [i.xcor()*.002 for i in self.obs] + [i.ycor()*.002 for i in self.obs]
+        state = [i.xcor()*.01 for i in self.obs] + [i.ycor()*.01 for i in self.obs] + [self.t_rex.ycor()*.01]
         return state
 
     def step(self, action):
@@ -183,10 +185,10 @@ class JumpGame:
         self.run_frame()
         self.reward += .1
 
-        state = [i.xcor()*.002 for i in self.obs] + [i.ycor()*.002 for i in self.obs]
+        state = [i.xcor()*.01 for i in self.obs] + [i.ycor()*.01 for i in self.obs] + [self.t_rex.ycor()*.01]
         return self.reward, state, self.done
 
 
-# env = JumpGame()
-# while 1:
-#     env.run_frame()
+env = JumpGame()
+while 1:
+    env.run_frame()
