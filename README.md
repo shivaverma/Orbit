@@ -64,3 +64,7 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 - Episode ends when box touchs a ball.
 
+# Environment 3: Cars (Coming Soon...)
+
+### Author: [Himanshu Verma](https://www.linkedin.com/in/himanshu-verma-bba8b610b/)
+
