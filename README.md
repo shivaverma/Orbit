@@ -4,6 +4,7 @@ Orbit is a open-source project and a collection of reinforcement learning enviro
 
 Orbit contains following RL environments as of today.
 
+---
 ## Environment 1: Paddle
 
 ### Author: [Shiva Verma](https://www.linkedin.com/in/shiva-verma/)
@@ -35,6 +36,7 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 ### Episode termination
 
 - Episode ends when ball touchs the ground.
+---
 
 ## Environment 2: Jump
 
@@ -63,6 +65,7 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 ### Episode termination
 
 - Episode ends when box touchs a ball.
+---
 
 ## Environment 3: Cars (Coming Soon...)
 
