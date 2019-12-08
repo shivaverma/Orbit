@@ -1,6 +1,6 @@
 # Orbit
 
-Orbit is a open-source project and a collection of reinforcement learning environments. If you want to contribute to this project by creating your own environment then please drop a mail to shivajbd@gmail.com
+Orbit is a open-source project and a collection of reinforcement learning environments. If you want to contribute to this project by creating your own environment then please drop a mail to shivajbd@gmail.com. You can know how to create an environment through [this](https://towardsdatascience.com/create-your-own-reinforcement-learning-environment-beb12f4151ef) blog: 
 
 Orbit contains following RL environments as of today.
 
