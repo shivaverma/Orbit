@@ -13,29 +13,36 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 
 <img src=environments/paddle/wall.gif width="400">
 
+---
+
 ### Action space (3)
 
-`0` - Move paddle to left.
-
-`1` - Do nothing.
-
-`2` - Move paddle to right.
+| Action      | Description |
+| :-----------: | :-----------: |
+| **0** | Move paddle to left |
+| **1**   | Do nothing        |
+| **2**      | Move paddle to right      |
 
 ### State space (5)
 
-- X position of paddle.
-- X and Y position of ball.
-- X and Y velocity of ball.
+|  Index  | Description |
+| :-----------: | :-----------: |
+| **1** | X position of paddle |
+| **2**   | X and Y position of ball        |
+| **3**      | X and Y velocity of ball     |
 
 ### Reward function
 
-- `+3` when paddle hit the ball.
-- `-3` when ball touchs the ground.
-- `-0.1` when paddle moves.
+|  Reward  | Description |
+| :-----------: | :-----------: |
+| **+3** | when paddle hit the ball |
+| **-3**   | when ball touchs the ground        |
+| **-0.1**      | when paddle moves     |
 
 ### Episode termination
 
 - Episode ends when ball touchs the ground.
+
 ---
 
 ## Environment 2: Jump
@@ -48,23 +55,30 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 ### Action space (2)
 
-`0` - Jump.
-
-`1` - Do nothing.
+| Action      | Description |
+| :-----------: | :-----------: |
+| **0** | Jump |
+| **1**   | Do nothing        |
 
 ### State space (13)
 
-- y position of box.
-- X and Y position of all moving ball.
+
+|  Index  | Description |
+| :-----------: | :-----------: |
+| **1** | y position of box |
+| **2**   | X and Y position of all moving ball        |
 
 ### Reward function
 
-- `+5` when box dodge a ball.
-- `+.1` for each time step.
+|  Reward  | Description |
+| :-----------: | :-----------: |
+| **+5** | when box dodge a ball |
+| **+0.1**   | for each time step        |
 
 ### Episode termination
 
 - Episode ends when box touchs a ball.
+
 ---
 
 ## Environment 3: Cars (Coming Soon...)
