@@ -15,7 +15,7 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 
 ---
 
-### Action space (3)
+**Action space (3)**
 
 | Action      | Description |
 | :-----------: | :-----------: |
@@ -23,7 +23,7 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 | **1**   | Do nothing        |
 | **2**      | Move paddle to right      |
 
-### State space (5)
+**State space (5)**
 
 |  Index  | Description |
 | :-----------: | :-----------: |
@@ -31,7 +31,7 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 | **2**   | X and Y position of ball        |
 | **3**      | X and Y velocity of ball     |
 
-### Reward function
+**Reward function**
 
 |  Reward  | Description |
 | :-----------: | :-----------: |
@@ -39,7 +39,7 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 | **-3**   | when ball touchs the ground        |
 | **-0.1**      | when paddle moves     |
 
-### Episode termination
+**Episode termination**
 
 - Episode ends when ball touchs the ground.
 
@@ -53,14 +53,14 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 <img src=environments/jump/wall.gif width="600">
 
-### Action space (2)
+**Action space (2)**
 
 | Action      | Description |
 | :-----------: | :-----------: |
 | **0** | Jump |
 | **1**   | Do nothing        |
 
-### State space (13)
+**State space (13)**
 
 
 |  Index  | Description |
@@ -68,14 +68,14 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 | **1** | y position of box |
 | **2**   | X and Y position of all moving ball        |
 
-### Reward function
+**Reward function**
 
 |  Reward  | Description |
 | :-----------: | :-----------: |
 | **+5** | when box dodge a ball |
 | **+0.1**   | for each time step        |
 
-### Episode termination
+**Episode termination**
 
 - Episode ends when box touchs a ball.
 
