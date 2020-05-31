@@ -72,7 +72,4 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 ---
 
-## Environment 3: Cars (Coming Soon...)
-
-### Author: [Himanshu Verma](https://www.linkedin.com/in/himanshu-verma-bba8b610b/)
-
+## Environment 3: (Coming Soon...)
