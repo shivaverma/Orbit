@@ -17,6 +17,10 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 
 **Action space (3)**
 
+- **`0`** - Move paddle to left
+- **`1`** - Do nothing
+- **`2`** - Move paddle to right
+
 | Action      | Description |
 | :-----------: | :-----------: |
 | **0** | Move paddle to left |
