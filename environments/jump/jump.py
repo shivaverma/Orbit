@@ -1,10 +1,13 @@
+# Author: Vinod Kumar
+
+
 import random
 import turtle
-
 
 class JumpGame:
 
     def __init__(self):
+
         self.screen_width = 900
         self.screen_length = 400
         self.done = False
@@ -24,7 +27,8 @@ class JumpGame:
         self.end = -90
         self.diff = (self.end - self.start) / (self.obs_size - 1)
 
-        self.color = ['orange', 'red', 'blue', 'green', 'yellow', 'cyan', 'purple', 'magenta']
+        # self.color = ['orange', 'red', 'blue', 'green', 'yellow', 'cyan', 'purple', 'magenta']
+        self.color = ['red', 'red', 'red', 'red', 'red', 'red', 'red', 'red']
         self.obs_height = [self.start + self.diff * i for i in range(self.obs_size)]
         self.obs = [turtle.Turtle() for i in range((self.obs_size * 3) // 2)]
 
@@ -36,7 +40,7 @@ class JumpGame:
         # Set up Background
         self.win = turtle.Screen()
         self.win.title('T rex')
-        self.win.bgcolor('white')
+        self.win.bgcolor('black')
         self.win.setup(width=self.screen_width, height=self.screen_length)
         self.win.tracer(0)
 
@@ -52,7 +56,7 @@ class JumpGame:
 
         self.score = turtle.Turtle()
         self.score.speed(0)
-        self.score.color('black')
+        self.score.color('white')
         self.score.penup()
         self.score.hideturtle()
         self.score.goto(0, 160)
@@ -69,11 +73,12 @@ class JumpGame:
             i.goto(self.screen_width / 2, 0)
 
     def inializeTrext(self):
+
         self.t_rex.shape('square')  # Select a square shape
         self.t_rex.speed(0)
         self.t_rex.shapesize(stretch_wid=1.6, stretch_len=1.6)  # Streach the length of square by 5
         self.t_rex.penup()
-        self.t_rex.color('black')  # Set the color to white
+        self.t_rex.color('white')  # Set the color to white
         self.t_rex.setx(-350)
         self.t_rex.sety(-175)
 
@@ -88,24 +93,30 @@ class JumpGame:
             i.goto(self.screen_width / 2, 0)
 
     def resetTrex(self):
+
         self.triggered = False
         self.count = self.up_down_count
         self.direction = 1
         self.t_rex.goto(-350, -175)
 
+
     def triggerjump(self):
+
         self.triggered = True
 
     def resetScore(self):
+
         self.scorecount = 0
         self.updateScore()
 
     def updateScore(self):
+
         self.score.clear()
         self.score.write("Score : {}".format(self.scorecount), align='center',
                          font=('Courier', 24, 'normal'))
 
     def resetOb(self, obs):
+
         obs.flag = False
         obs.passed = False
         obs.setx(self.screen_width / 2)
@@ -128,9 +139,12 @@ class JumpGame:
     def move_previous_obstacles(self):
         # print(len(self.obs))
         for i in self.obs:
+
             if i.flag:
+
                 if i.xcor() + self.obstacle_speed < -1 * self.screen_width / 2:
                     self.resetOb(i)
+
                 else:
                     if abs(self.t_rex.xcor() - i.xcor()) <= 17 and abs(self.t_rex.ycor() - i.ycor()) <= 25:
                         self.done = True
@@ -145,6 +159,7 @@ class JumpGame:
                         i.setx(i.xcor() + self.obstacle_speed)
 
     def run_frame(self):
+
         self.win.update()
         self.move_previous_obstacles()
         if self.counter % 60 == 0:
