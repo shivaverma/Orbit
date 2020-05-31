@@ -17,23 +17,15 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 
 **Action space (3)**
 
-- **`0`** - Move paddle to left
-- **`1`** - Do nothing
-- **`2`** - Move paddle to right
-
-| Action      | Description |
-| :-----------: | :-----------: |
-| **0** | Move paddle to left |
-| **1**   | Do nothing        |
-| **2**      | Move paddle to right      |
+- **`0`** - move paddle to left
+- **`1`** - do nothing
+- **`2`** - move paddle to right
 
 **State space (5)**
 
-|  Index  | Description |
-| :-----------: | :-----------: |
-| **1** | X position of paddle |
-| **2**   | X and Y position of ball        |
-| **3**      | X and Y velocity of ball     |
+- **`1`** - x position of paddle
+- **`2`** - x and y position of ball 
+- **`3`** - x and y velocity of ball
 
 **Reward function**
 
@@ -59,18 +51,13 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 **Action space (2)**
 
-| Action      | Description |
-| :-----------: | :-----------: |
-| **0** | Jump |
-| **1**   | Do nothing        |
+- **`0`** - jump
+- **`1`** - do nothing
 
 **State space (13)**
 
-
-|  Index  | Description |
-| :-----------: | :-----------: |
-| **1** | y position of box |
-| **2**   | X and Y position of all moving ball        |
+- **`1`** - y position of box
+- **`2`** - x and y position of all moving ball
 
 **Reward function**
 
