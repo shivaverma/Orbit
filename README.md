@@ -23,9 +23,9 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 
 **State space (5)**
 
-- **`1`** - x position of paddle
-- **`2`** - x and y position of ball 
-- **`3`** - x and y velocity of ball
+- x position of paddle
+- x and y position of ball 
+- x and y velocity of ball
 
 **Reward function**
 
@@ -56,8 +56,8 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 **State space (13)**
 
-- **`1`** - y position of box
-- **`2`** - x and y position of all moving ball
+- y position of box
+- x and y position of all moving ball
 
 **Reward function**
 
