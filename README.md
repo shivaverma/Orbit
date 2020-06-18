@@ -11,7 +11,7 @@ Orbit contains following RL environments as of today.
 
 The task is to hit the ball with paddle. Inbuilt `turtle` library is used to create the environment.
 
-<img src=environments/paddle/wall.gif width="400">
+<img src=Paddle/wall.gif width="400">
 
 ---
 
@@ -47,7 +47,7 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 
 The task to dodge the box from moving balls. Inbuilt `turtle` library is used to create the environment.
 
-<img src=environments/jump/wall.gif width="600">
+<img src=Jump/wall.gif width="600">
 
 **Action space (2)**
 
