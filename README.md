@@ -2,6 +2,12 @@
 
 Orbit is a open-source project and a collection of reinforcement learning environments. If you want to contribute to this project by creating your own environment then please drop a mail to shivajbd@gmail.com. You can know how to create an environment through [this](https://towardsdatascience.com/create-your-own-reinforcement-learning-environment-beb12f4151ef) blog: 
 
+### Requirements
+
+- **`python`** - `3.7`
+- **`keras`** -  `2.4.3`
+- **`tensorflow`** -  `2.2.0`
+
 Orbit contains following RL environments as of today.
 
 ---
