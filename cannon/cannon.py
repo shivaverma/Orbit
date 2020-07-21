@@ -4,7 +4,7 @@ import pygame
 import sys
 import os
 from random import randint
-from pygame.locals import *
+from pygame.locals import QUIT,KEYDOWN,K_ESCAPE,K_LEFT,K_RIGHT,K_SPACE,K_a,K_d
 from math import sin, cos, pi
 
 WIN_WIDTH = 600
@@ -39,7 +39,7 @@ class Plank:
     def __init__(self):
         self.xvel = 1
         self.rect = pygame.Rect(0, 0, self.PLANK_WIDTH, self.PLANK_HEIGHT)
-        self.rect.center = (300, 550)
+        self.rect.center = (WIN_WIDTH/2, WIN_HEIGHT-50)
         self.cannon = pygame.transform.scale(
             pygame.image.load(os.path.join('assets', 'imgs', 'cannon.png')),
             (80, 110)
@@ -105,7 +105,7 @@ class Bullet:
 
 def draw_frame(win, plank, circles, bullets, angle, score, lives):
     win.fill((0, 0, 0))
-    pygame.draw.line(win, (100, 100, 100), (0, 450), (WIN_WIDTH, 450))
+    pygame.draw.line(win, (100, 100, 100), (0, WIN_HEIGHT-150), (WIN_WIDTH, WIN_HEIGHT-150))
     for circle in circles:
         circle.draw(win)
     for bullet in bullets:
@@ -158,7 +158,7 @@ if __name__ == '__main__':
                     score += 1
                     break
         for index, ball in enumerate(balls):
-            if ball.rect.center[1]+ball.radius >= 450:
+            if ball.rect.center[1]+ball.radius >= WIN_HEIGHT-150:
                 balls.pop(index)
                 del ball
                 lives -= 1
@@ -175,9 +175,9 @@ if __name__ == '__main__':
             sys.exit()
 
         keys = pygame.key.get_pressed()
-        if (keys[pygame.K_d] or keys[pygame.K_RIGHT]) and angle < 80:
+        if (keys[K_d] or keys[pygame.K_RIGHT]) and angle < 80:
             angle += 3
-        elif (keys[pygame.K_a] or keys[pygame.K_LEFT]) and angle > -80:
+        elif (keys[K_a] or keys[pygame.K_LEFT]) and angle > -80:
             angle -= 3
         if shoot_counter < 0 and keys[pygame.K_SPACE]:
             shoot_counter = 5
