@@ -4,7 +4,7 @@
 import random
 import turtle
 
-class JumpGame:
+class Jump:
 
     def __init__(self):
 
@@ -32,7 +32,7 @@ class JumpGame:
         self.obs_height = [self.start + self.diff * i for i in range(self.obs_size)]
         self.obs = [turtle.Turtle() for i in range((self.obs_size * 3) // 2)]
 
-        self.initializeObs()
+        self.resetObs()
 
         self.done = 0
         self.reward = 0
@@ -61,16 +61,6 @@ class JumpGame:
         self.score.hideturtle()
         self.score.goto(0, 160)
         self.score.write("Score : {}".format(self.scorecount), align='center', font=('Courier', 24, 'normal'))
-
-    def initializeObs(self):
-        for i in self.obs:
-            i.flag = False
-            i.passed = False
-            i.speed(0)
-            i.shape('circle')  # Select a circle shape
-            i.color(random.choice(self.color))
-            i.penup()
-            i.goto(self.screen_width / 2, 0)
 
     def inializeTrext(self):
 
@@ -160,7 +150,7 @@ class JumpGame:
 
     def run_frame(self):
 
-        self.win.update()
+        # self.win.update()
         self.move_previous_obstacles()
         if self.counter % 60 == 0:
             r1 = random.randint(0, 4)
@@ -195,15 +185,16 @@ class JumpGame:
         self.done = 0
 
         if action == 1:
+            self.reward -= 1
             self.triggerjump()
 
         self.run_frame()
         self.reward += .1
 
-        state = [i.xcor()*.01 for i in self.obs] + [i.ycor()*.01 for i in self.obs] + [self.t_rex.ycor()*.01]
+        state = [i.xcor()*.01 for i in self.obs] + [i.ycor()*.01 for i in self.obs] + [int(self.triggered)]
         return self.reward, state, self.done
 
 
-env = JumpGame()
-while 1:
-    env.run_frame()
+# env = Jump()
+# while 1:
+#     env.run_frame()
