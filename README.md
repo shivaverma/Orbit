@@ -78,4 +78,6 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 ---
 
-## Environment 3: (Coming Soon...)
+## Environment 3: Cannon (Coming Soon...)
+
+### Author: [Sathish Kumar](https://www.linkedin.com/in/sathish-kumar-elangovan-1a5379168/)
