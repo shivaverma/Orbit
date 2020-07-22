@@ -10,6 +10,8 @@ Orbit is a open-source project and a collection of reinforcement learning enviro
 
 Orbit contains following RL environments as of today.
 
+---
+
 # Environment 1: Paddle
 
 ### Author: [Shiva Verma](https://www.linkedin.com/in/shiva-verma/)
