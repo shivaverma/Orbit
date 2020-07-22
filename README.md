@@ -12,7 +12,7 @@ Orbit contains following RL environments as of today.
 
 ---
 
-# Environment 1: Paddle
+# Paddle
 
 ### Author: [Shiva Verma](https://www.linkedin.com/in/shiva-verma/)
 
@@ -44,7 +44,7 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 
 - Episode ends when ball touchs the ground.
 
-# Environment 2: Jump
+# Jump
 
 ### Author: [Vinod Kumar](https://www.linkedin.com/in/vinodkumar96/)
 
@@ -73,6 +73,6 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 - Episode ends when box touchs a ball.
 
-# Environment 3: Cannon (Coming Soon...)
+# Cannon (Coming Soon...)
 
 ### Author: [Sathish Kumar](https://www.linkedin.com/in/sathish-kumar-elangovan-1a5379168/)
