@@ -67,6 +67,7 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 |  Reward  | Description |
 | :-----------: | :-----------: |
 | **+5** | when box dodge a ball |
+| **-1** | for each jump |
 | **+0.1**   | for each time step        |
 
 **Episode termination**
