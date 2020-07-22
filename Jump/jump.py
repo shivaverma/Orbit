@@ -3,11 +3,13 @@
 
 import random
 import turtle
+from tkinter import PhotoImage
 
 class Jump:
 
     def __init__(self):
 
+        self.kangaroo = 'img/kangaroo.gif'
         self.screen_width = 900
         self.screen_length = 400
         self.done = False
@@ -27,8 +29,8 @@ class Jump:
         self.end = -90
         self.diff = (self.end - self.start) / (self.obs_size - 1)
 
-        # self.color = ['orange', 'red', 'blue', 'green', 'yellow', 'cyan', 'purple', 'magenta']
-        self.color = ['red', 'red', 'red', 'red', 'red', 'red', 'red', 'red']
+        self.color = ['orange', 'red', 'blue', 'green', 'yellow', 'cyan', 'purple', 'magenta']
+        # self.color = ['red', 'red', 'red', 'red', 'red', 'red', 'red', 'red']
         self.obs_height = [self.start + self.diff * i for i in range(self.obs_size)]
         self.obs = [turtle.Turtle() for i in range((self.obs_size * 3) // 2)]
 
@@ -39,7 +41,8 @@ class Jump:
 
         # Set up Background
         self.win = turtle.Screen()
-        self.win.title('T rex')
+        self.win.addshape(self.kangaroo)
+        self.win.title('Jump')
         self.win.bgcolor('black')
         self.win.setup(width=self.screen_width, height=self.screen_length)
         self.win.tracer(0)
@@ -64,7 +67,8 @@ class Jump:
 
     def inializeTrext(self):
 
-        self.t_rex.shape('square')  # Select a square shape
+        self.t_rex.shape(self.kangaroo)  # Select a square shape
+
         self.t_rex.speed(0)
         self.t_rex.shapesize(stretch_wid=1.6, stretch_len=1.6)  # Streach the length of square by 5
         self.t_rex.penup()
@@ -150,7 +154,7 @@ class Jump:
 
     def run_frame(self):
 
-        # self.win.update()
+        self.win.update()
         self.move_previous_obstacles()
         if self.counter % 60 == 0:
             r1 = random.randint(0, 4)
@@ -195,6 +199,8 @@ class Jump:
         return self.reward, state, self.done
 
 
-# env = Jump()
-# while 1:
-#     env.run_frame()
+# ------------------------ Human control ------------------------
+
+env = Jump()
+while 1:
+    env.run_frame()
