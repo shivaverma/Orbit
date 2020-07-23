@@ -72,7 +72,7 @@ The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is us
 
 **Episode termination**
 
-- Episode ends when box touchs a ball.
+- Episode ends when kangaroo touchs a ball.
 
 # Environment 3: Cannon 
 
