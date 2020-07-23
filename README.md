@@ -34,11 +34,9 @@ The task is to take the ball on paddle. Inbuilt `turtle` library is used to crea
 
 **Reward function**
 
-|  Reward  | Description |
-| :-----------: | :-----------: |
-| **+3** | when paddle hit the ball |
-| **-3**   | when ball touchs the ground        |
-| **-0.1**      | when paddle moves     |
+- **`+3.0`** - when paddle hit the ball
+- **`-3.0`** - when ball touchs the ground
+- **`-0.1`** - when paddle moves
 
 **Episode termination**
 
@@ -59,16 +57,14 @@ The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is us
 
 **State space (13)**
 
-- y position of box
+- y position of kangaroo
 - x and y position of all moving ball
 
 **Reward function**
 
-|  Reward  | Description |
-| :-----------: | :-----------: |
-| **+5** | when box dodge a ball |
-| **-1** | for each jump |
-| **+0.1**   | for each time step        |
+- **`+5.0`** - when kangaroo dodge a ball
+- **`-1.0`** - for each jump
+- **`+0.1`** - for each time step 
 
 **Episode termination**
 
