@@ -3,11 +3,13 @@
 
 import random
 import turtle
+from tkinter import PhotoImage
 
-class JumpGame:
+class Jump:
 
     def __init__(self):
 
+        self.kangaroo = 'img/kangaroo.gif'
         self.screen_width = 900
         self.screen_length = 400
         self.done = False
@@ -27,19 +29,20 @@ class JumpGame:
         self.end = -90
         self.diff = (self.end - self.start) / (self.obs_size - 1)
 
-        # self.color = ['orange', 'red', 'blue', 'green', 'yellow', 'cyan', 'purple', 'magenta']
-        self.color = ['red', 'red', 'red', 'red', 'red', 'red', 'red', 'red']
+        self.color = ['orange', 'red', 'blue', 'green', 'yellow', 'cyan', 'purple', 'magenta']
+        # self.color = ['red', 'red', 'red', 'red', 'red', 'red', 'red', 'red']
         self.obs_height = [self.start + self.diff * i for i in range(self.obs_size)]
         self.obs = [turtle.Turtle() for i in range((self.obs_size * 3) // 2)]
 
-        self.initializeObs()
+        self.resetObs()
 
         self.done = 0
         self.reward = 0
 
         # Set up Background
         self.win = turtle.Screen()
-        self.win.title('T rex')
+        self.win.addshape(self.kangaroo)
+        self.win.title('Jump')
         self.win.bgcolor('black')
         self.win.setup(width=self.screen_width, height=self.screen_length)
         self.win.tracer(0)
@@ -62,19 +65,10 @@ class JumpGame:
         self.score.goto(0, 160)
         self.score.write("Score : {}".format(self.scorecount), align='center', font=('Courier', 24, 'normal'))
 
-    def initializeObs(self):
-        for i in self.obs:
-            i.flag = False
-            i.passed = False
-            i.speed(0)
-            i.shape('circle')  # Select a circle shape
-            i.color(random.choice(self.color))
-            i.penup()
-            i.goto(self.screen_width / 2, 0)
-
     def inializeTrext(self):
 
-        self.t_rex.shape('square')  # Select a square shape
+        self.t_rex.shape(self.kangaroo)  # Select a square shape
+
         self.t_rex.speed(0)
         self.t_rex.shapesize(stretch_wid=1.6, stretch_len=1.6)  # Streach the length of square by 5
         self.t_rex.penup()
@@ -195,15 +189,18 @@ class JumpGame:
         self.done = 0
 
         if action == 1:
+            self.reward -= 1
             self.triggerjump()
 
         self.run_frame()
         self.reward += .1
 
-        state = [i.xcor()*.01 for i in self.obs] + [i.ycor()*.01 for i in self.obs] + [self.t_rex.ycor()*.01]
+        state = [i.xcor()*.01 for i in self.obs] + [i.ycor()*.01 for i in self.obs] + [int(self.triggered)]
         return self.reward, state, self.done
 
 
-env = JumpGame()
+# ------------------------ Human control ------------------------
+
+env = Jump()
 while 1:
     env.run_frame()

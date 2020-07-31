@@ -71,36 +71,6 @@ class Paddle():
         if x > -225:
             self.paddle.setx(x-20)
 
-    # ------------------------ AI control ------------------------
-
-    # 0 move left
-    # 1 do nothing
-    # 2 move right
-
-    def reset(self):
-
-        self.paddle.goto(0, -275)
-        self.ball.goto(0, 100)
-        return [self.paddle.xcor()*0.01, self.ball.xcor()*0.01, self.ball.ycor()*0.01, self.ball.dx, self.ball.dy]
-
-    def step(self, action):
-
-        self.reward = 0
-        self.done = 0
-
-        if action == 0:
-            self.paddle_left()
-            self.reward -= .1
-
-        if action == 2:
-            self.paddle_right()
-            self.reward -= .1
-
-        self.run_frame()
-
-        state = [self.paddle.xcor()*0.01, self.ball.xcor()*0.01, self.ball.ycor()*0.01, self.ball.dx, self.ball.dy]
-        return self.reward, state, self.done
-
     def run_frame(self):
 
         self.win.update()
@@ -143,7 +113,40 @@ class Paddle():
             self.score.write("Hit: {}   Missed: {}".format(self.hit, self.miss), align='center', font=('Courier', 24, 'normal'))
             self.reward += 3
 
+    # ------------------------ AI control ------------------------
 
-# while True:
-#
-#      env.run_frame()
+    # 0 move left
+    # 1 do nothing
+    # 2 move right
+
+    def reset(self):
+
+        self.paddle.goto(0, -275)
+        self.ball.goto(0, 100)
+        return [self.paddle.xcor()*0.01, self.ball.xcor()*0.01, self.ball.ycor()*0.01, self.ball.dx, self.ball.dy]
+
+    def step(self, action):
+
+        self.reward = 0
+        self.done = 0
+
+        if action == 0:
+            self.paddle_left()
+            self.reward -= .1
+
+        if action == 2:
+            self.paddle_right()
+            self.reward -= .1
+
+        self.run_frame()
+
+        state = [self.paddle.xcor()*0.01, self.ball.xcor()*0.01, self.ball.ycor()*0.01, self.ball.dx, self.ball.dy]
+        return self.reward, state, self.done
+
+
+# ------------------------ Human control ------------------------
+
+env = Paddle()
+
+while True:
+     env.run_frame()
