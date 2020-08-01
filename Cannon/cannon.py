@@ -4,221 +4,229 @@ import pygame
 import sys
 from pygame.locals import QUIT, KEYDOWN, K_ESCAPE, K_LEFT, K_RIGHT, K_SPACE, K_a, K_d
 from assets.objects import Ball, Bullet, Plank, rotate
-
+from math import sin, cos, pi , inf
 # Game environment class
 
 class Cannon:
-    WIN_WIDTH = 600
-    WIN_HEIGHT = 600
-    FPS = 30
+	WIN_WIDTH = 600
+	WIN_HEIGHT = 600
+	FPS = 30
 
-    def __init__(self):
-        pygame.font.init()
-        pygame.init()
+	def __init__(self,graphics=True):
+		pygame.font.init()
+		pygame.init()
+		self.graphics = graphics
+		self.STAT_FONT = pygame.font.SysFont("comicsans", 30)
+		self.clock = pygame.time.Clock()
+		pygame.display.set_caption("Cannon")
+		self.WIN = pygame.display.set_mode((self.WIN_WIDTH, self.WIN_HEIGHT))
+		self.last_ball = 0
+		self.playing = False
+		self.plank = Plank(self.WIN_WIDTH, self.WIN_HEIGHT)
+		self.angle = 0
+		self.lives = LIVES
+		self.score = 0
+		self.balls = list()
+		for i in range(3):
+			b = Ball(self.WIN_WIDTH, self.last_ball)
+			self.balls.append(b)
+			self.last_ball = b.center[1]
 
-        self.STAT_FONT = pygame.font.SysFont("comicsans", 30)
-        self.clock = pygame.time.Clock()
-        pygame.display.set_caption("Cannon")
-        self.WIN = pygame.display.set_mode((self.WIN_WIDTH, self.WIN_HEIGHT))
-        self.last_ball = 0
+		self.bullets = list()
+		self.shoot_counter = 10
 
-        self.plank = Plank(self.WIN_WIDTH, self.WIN_HEIGHT)
-        self.angle = 0
-        self.lives = LIVES
-        self.score = 0
-        self.balls = list()
-        for i in range(3):
-            b = Ball(self.WIN_WIDTH, self.last_ball)
-            self.balls.append(b)
-            self.last_ball = b.center[1]
+	# drawing all the objects to screen(WIN)
 
-        self.bullets = list()
-        self.shoot_counter = 5
+	def draw_frame(self):
+		self.WIN.fill((0, 0, 0))
+		pygame.draw.line(self.WIN, (100, 100, 100), (0,
+													 self.WIN_HEIGHT-150), (self.WIN_WIDTH, self.WIN_HEIGHT-150))
+		for ball in self.balls:
+			ball.draw(self.WIN)
+		for bullet in self.bullets:
+			bullet.draw(self.WIN)
+		self.plank.draw(self.WIN, self.angle)
 
-    # drawing all the objects to screen(WIN)
+		score_label = self.STAT_FONT.render(
+			"Score: " + str(self.score), 1, (255, 255, 255))
+		if self.playing:
+			self.WIN.blit(score_label, ((self.WIN_WIDTH - score_label.get_width()-15), 10))
+			# to render lives
+			lives_label = self.STAT_FONT.render(
+				"Lives: " + str(self.lives), 1, (255, 255, 255))
+			self.WIN.blit(lives_label, (15, 10))
+		else:
+			self.WIN.blit(score_label, ((self.WIN_WIDTH - score_label.get_width())/2, 10))
 
-    def draw_frame(self):
-        self.WIN.fill((0, 0, 0))
-        pygame.draw.line(self.WIN, (100, 100, 100), (0,
-                                                     self.WIN_HEIGHT-150), (self.WIN_WIDTH, self.WIN_HEIGHT-150))
-        for ball in self.balls:
-            ball.draw(self.WIN)
-        for bullet in self.bullets:
-            bullet.draw(self.WIN)
-        self.plank.draw(self.WIN, self.angle)
+	# game logic runs in this fuction for each frame
+	def game_loop(self):
+		hit = False
+		life_down = False
 
-        score_label = self.STAT_FONT.render(
-            "Score: " + str(self.score), 1, (255, 255, 255))
-        self.WIN.blit(score_label, (self.WIN_WIDTH -
-                                    score_label.get_width() - 15, 10))
-        lives_label = self.STAT_FONT.render(
-            "Lives: " + str(self.lives), 1, (255, 255, 255))
-        self.WIN.blit(lives_label, (15, 10))
+		for event in pygame.event.get():
+			if event.type == QUIT:           # terminates the game when game window is closed
+				pygame.quit()
+				sys.exit()
+			elif event.type == KEYDOWN:
+				if event.key == K_ESCAPE:    # terminates the game when esc is pressed
+					pygame.quit()
+					sys.exit()
 
-    # game logic runs in this fuction for each frame
-    def game_loop(self):
-        hit = False
-        life_down = False
+		# Detect collision between ball and bullet
+		for i, bullet in enumerate(self.bullets):
+			for j, ball in enumerate(self.balls):
+				offset_x, offset_y = bullet.rect.x - \
+					ball.rect.x, bullet.rect.y - ball.rect.y  # calculate offset
+				# returns points of overlap
+				overlap = ball.mask.overlap(bullet.mask, (offset_x, offset_y))
+				if overlap:
+					self.balls.pop(j)
+					self.bullets.pop(i)
+					del ball
+					del bullet
+					self.score += 1
+					hit = True
+					break
 
-        for event in pygame.event.get():
-            if event.type == QUIT:           # terminates the game when game window is closed
-                pygame.quit()
-                sys.exit()
-            elif event.type == KEYDOWN:
-                if event.key == K_ESCAPE:    # terminates the game when esc is pressed
-                    pygame.quit()
-                    sys.exit()
+		# check if lost a life
+		for index, ball in enumerate(self.balls):
+			if ball.rect.center[1]+ball.radius >= self.WIN_HEIGHT-150:
+				self.balls.pop(index)
+				del ball
+				self.lives -= 1
+				life_down = True
+				break
 
-        # Detect collision between ball and bullet
-        for i, bullet in enumerate(self.bullets):
-            for j, ball in enumerate(self.balls):
-                offset_x, offset_y = bullet.rect.x - \
-                    ball.rect.x, bullet.rect.y - ball.rect.y  # calculate offset
-                # returns points of overlap
-                overlap = ball.mask.overlap(bullet.mask, (offset_x, offset_y))
-                if overlap:
-                    self.balls.pop(j)
-                    self.bullets.pop(i)
-                    del ball
-                    del bullet
-                    self.score += 1
-                    hit = True
-                    break
+		# delete bullets out of the screen
+		for index, bullet in enumerate(self.bullets):
+			if bullet.rect.bottom <= 0:
+				self.bullets.pop(index)
+				del bullet
+				break
 
-        # check if lost a life
-        for index, ball in enumerate(self.balls):
-            if ball.rect.center[1]+ball.radius >= self.WIN_HEIGHT-150:
-                self.balls.pop(index)
-                del ball
-                self.lives -= 1
-                life_down = True
-                break
+		# creating new balls to fall
+		while len(self.balls) < 3:
+			b = Ball(self.WIN_WIDTH, self.last_ball)
+			self.balls.append(b)
+			self.last_ball = b.center[1]
 
-        # delete bullets out of the screen
-        for index, bullet in enumerate(self.bullets):
-            if bullet.rect.bottom <= 0:
-                self.bullets.pop(index)
-                del bullet
-                break
+		self.shoot_counter -= 1
 
-        # creating new balls to fall
-        while len(self.balls) < 3:
-            b = Ball(self.WIN_WIDTH, self.last_ball)
-            self.balls.append(b)
-            self.last_ball = b.center[1]
+		return hit, life_down
 
-        self.shoot_counter -= 1
+	def play(self):
+		self.playing = True
+		while True:
 
-        return hit, life_down
+			self.clock.tick(self.FPS)
 
-    def play(self):
-        while True:
+			hit, life_down = self.game_loop()
 
-            self.clock.tick(self.FPS)
+			# input from user
+			keys = pygame.key.get_pressed()
+			if (keys[K_d] or keys[pygame.K_RIGHT]) and self.angle < 70:
+				self.angle += 3
+			elif (keys[K_a] or keys[pygame.K_LEFT]) and self.angle > -70:
+				self.angle -= 3
+			if self.shoot_counter < 0 and keys[pygame.K_SPACE]:
+				self.shoot_counter = 10
+				x, y = self.plank.rect.center
+				self.bullets.append(Bullet(x, y, self.angle, self.WIN_WIDTH))
 
-            hit, life_down = self.game_loop()
+			# game termination condition
+			if self.lives < 0:
+				pygame.quit()
+				sys.exit()
+			if self.graphics:
+				self.draw_frame()           # generates new frame
+				pygame.display.update()     # renders the new frame
+		pygame.quit()
 
-            # input from user
-            keys = pygame.key.get_pressed()
-            if (keys[K_d] or keys[pygame.K_RIGHT]) and self.angle < 70:
-                self.angle += 3
-            elif (keys[K_a] or keys[pygame.K_LEFT]) and self.angle > -70:
-                self.angle -= 3
-            if self.shoot_counter < 0 and keys[pygame.K_SPACE]:
-                self.shoot_counter = 5
-                x, y = self.plank.rect.center
-                self.bullets.append(Bullet(x, y, self.angle, self.WIN_WIDTH))
+	# reset the
+	def reset(self):
+		self.plank.__init__(self.WIN_WIDTH, self.WIN_HEIGHT)
+		self.angle = 0
+		self.lives = 1
+		self.score = 0
+		self.balls = list()
+		self.last_ball = 0
+		for i in range(3):
+			b = Ball(self.WIN_WIDTH, self.last_ball)
+			self.balls.append(b)
+			self.last_ball = b.center[1]
 
-            # game termination condition
-            if self.lives < 0:
-                pygame.quit()
-                sys.exit()
+		self.bullets = list()
+		self.shoot_counter = 10
 
-            self.draw_frame()           # generates new frame
-            pygame.display.update()     # renders the new frame
-        pygame.quit()
+		ball_cor = list()
+		for ball in self.balls:
+			ball_cor.append(ball.rect.center[0]/self.WIN_WIDTH)
+			ball_cor.append(ball.rect.center[1]/self.WIN_HEIGHT)
+		state = [
+			self.plank.rect.center[0]/self.WIN_WIDTH,
+			sin(self.angle),
+			*ball_cor
+		]
 
-    # reset the
-    def reset(self):
-        self.plank.__init__(self.WIN_WIDTH, self.WIN_HEIGHT)
-        self.angle = 0
-        self.lives = LIVES
-        self.score = 0
-        self.balls = list()
-        self.last_ball = 0
-        for i in range(3):
-            b = Ball(self.WIN_WIDTH, self.last_ball)
-            self.balls.append(b)
-            self.last_ball = b.center[1]
+		return state
 
-        self.bullets = list()
-        self.shoot_counter = 5
-        # self.ball_counter = 60
+	def step(self, action):
 
-        ball_cor = list()
-        for ball in self.balls:
-            ball_cor.append(ball.rect.center[0]/self.WIN_WIDTH)
-            ball_cor.append(ball.rect.center[1]/self.WIN_HEIGHT)
-        state = [
-            self.plank.rect.center[0]/self.WIN_WIDTH,
-            sin(self.angle),
-            *ball_cor
-        ]
+		self.reward = 0
+		self.done = 0
 
-        return state
+		# left
+		if action == 0:
+			self.reward -= .1
+			if self.angle > -70:
+				self.angle -= 3
 
-    def step(self, action):
+		# right
+		elif action == 1:
+			self.reward -= .1
+			if self.angle < 70:
+				self.angle += 3
 
-        self.reward = 0
-        self.done = 0
+		# shoot
+		elif action == 2:
+			self.reward -= .5
+			if self.shoot_counter < 0:
+				self.shoot_counter = 10
+				x, y = self.plank.rect.center
+				self.bullets.append(Bullet(x, y, self.angle, self.WIN_WIDTH))
 
-        # left
-        if action == 0:
-            self.reward -= .1
-            if self.angle > -70:
-                self.angle -= 3
+		
 
-        # right
-        elif action == 1:
-            self.reward -= .1
-            if self.angle < 70:
-                self.angle += 3
+		hit, life_down = self.game_loop()
 
-        # shoot
-        elif action == 2:
-            self.reward -= .5
-            if self.shoot_counter < 0:
-                self.shoot_counter = 5
-                x, y = self.plank.rect.center
-                self.bullets.append(Bullet(x, y, self.angle, self.WIN_WIDTH))
+		if hit:
+			self.reward += 5
+		if life_down:
+			self.reward -= 5
+		if self.lives <= 0:
+			self.done = True
 
-        if self.lives < 0:
-            self.reset()
+		
+		ball_cor = list()
+		for ball in self.balls:
+			ball_cor.append(ball.rect.center[0]/self.WIN_WIDTH)
+			ball_cor.append(ball.rect.center[1]/self.WIN_HEIGHT)
+		state = [
+			self.plank.rect.center[0]/self.WIN_WIDTH,
+			sin(self.angle),
+			*ball_cor
+		]
 
-        hit, life_down = self.game_loop()
+		if self.graphics:
+			self.clock.tick(self.FPS)
+			self.draw_frame()           # generates new frame
+			pygame.display.update()     # renders the new frame
 
-        if hit:
-            self.reward += 5
-        if life_down:
-            self.reward -= 5
-        if self.lives < 0:
-            self.done = True
-
-        ball_cor = list()
-        for ball in self.balls:
-            ball_cor.append(ball.rect.center[0]/self.WIN_WIDTH)
-            ball_cor.append(ball.rect.center[1]/self.WIN_HEIGHT)
-        state = [
-            self.plank.rect.center[0]/self.WIN_WIDTH,
-            sin(self.angle),
-            *ball_cor
-        ]
-
-        return self.reward, state, self.done
+		return self.reward, state, self.done
 
 
 LIVES = 5
 
 if __name__ == '__main__':
-    env = Cannon()
-    env.play()
+	env = Cannon(graphics=True)
+	env.play()
