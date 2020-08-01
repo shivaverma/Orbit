@@ -8,7 +8,7 @@ class Jump:
 
     def __init__(self):
 
-        self.kangaroo = 'img/kangaroo.gif'
+        self.kangaroo = 'assets/kangaroo.gif'
         self.screen_width = 900
         self.screen_length = 400
         self.done = False
