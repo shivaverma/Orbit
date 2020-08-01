@@ -4,7 +4,7 @@ import pygame
 import sys
 from pygame.locals import QUIT, KEYDOWN, K_ESCAPE, K_LEFT, K_RIGHT, K_SPACE, K_a, K_d
 from assets.objects import Ball, Bullet, Plank, rotate
-
+from math import sin, cos, pi , inf
 # Game environment class
 
 class Cannon:
@@ -33,7 +33,7 @@ class Cannon:
             self.last_ball = b.center[1]
 
         self.bullets = list()
-        self.shoot_counter = 5
+        self.shoot_counter = 10
 
     # drawing all the objects to screen(WIN)
 
@@ -125,7 +125,7 @@ class Cannon:
             elif (keys[K_a] or keys[pygame.K_LEFT]) and self.angle > -70:
                 self.angle -= 3
             if self.shoot_counter < 0 and keys[pygame.K_SPACE]:
-                self.shoot_counter = 5
+                self.shoot_counter = 10
                 x, y = self.plank.rect.center
                 self.bullets.append(Bullet(x, y, self.angle, self.WIN_WIDTH))
 
@@ -142,7 +142,7 @@ class Cannon:
     def reset(self):
         self.plank.__init__(self.WIN_WIDTH, self.WIN_HEIGHT)
         self.angle = 0
-        self.lives = LIVES
+        self.lives = 1
         self.score = 0
         self.balls = list()
         self.last_ball = 0
@@ -152,8 +152,7 @@ class Cannon:
             self.last_ball = b.center[1]
 
         self.bullets = list()
-        self.shoot_counter = 5
-        # self.ball_counter = 60
+        self.shoot_counter = 10
 
         ball_cor = list()
         for ball in self.balls:
@@ -188,12 +187,11 @@ class Cannon:
         elif action == 2:
             self.reward -= .5
             if self.shoot_counter < 0:
-                self.shoot_counter = 5
+                self.shoot_counter = 10
                 x, y = self.plank.rect.center
                 self.bullets.append(Bullet(x, y, self.angle, self.WIN_WIDTH))
 
-        if self.lives < 0:
-            self.reset()
+        
 
         hit, life_down = self.game_loop()
 
@@ -201,9 +199,10 @@ class Cannon:
             self.reward += 5
         if life_down:
             self.reward -= 5
-        if self.lives < 0:
+        if self.lives <= 0:
             self.done = True
 
+        
         ball_cor = list()
         for ball in self.balls:
             ball_cor.append(ball.rect.center[0]/self.WIN_WIDTH)
@@ -213,6 +212,10 @@ class Cannon:
             sin(self.angle),
             *ball_cor
         ]
+
+        # comment it while training    
+        # self.draw_frame()           # generates new frame
+        # pygame.display.update()     # renders the new frame
 
         return self.reward, state, self.done
 
