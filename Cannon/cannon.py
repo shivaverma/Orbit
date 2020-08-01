@@ -49,14 +49,8 @@ class Cannon:
 
 		score_label = self.STAT_FONT.render(
 			"Score: " + str(self.score), 1, (255, 255, 255))
-		if self.playing:
-			self.WIN.blit(score_label, ((self.WIN_WIDTH - score_label.get_width()-15), 10))
-			# to render lives
-			lives_label = self.STAT_FONT.render(
-				"Lives: " + str(self.lives), 1, (255, 255, 255))
-			self.WIN.blit(lives_label, (15, 10))
-		else:
-			self.WIN.blit(score_label, ((self.WIN_WIDTH - score_label.get_width())/2, 10))
+
+		self.WIN.blit(score_label, ((self.WIN_WIDTH - score_label.get_width())/2, 10))
 
 	# game logic runs in this fuction for each frame
 	def game_loop(self):
@@ -195,7 +189,9 @@ class Cannon:
 				x, y = self.plank.rect.center
 				self.bullets.append(Bullet(x, y, self.angle, self.WIN_WIDTH))
 
-		
+		# do nothing
+		elif action == 3:
+			pass
 
 		hit, life_down = self.game_loop()
 
@@ -225,7 +221,7 @@ class Cannon:
 		return self.reward, state, self.done
 
 
-LIVES = 5
+LIVES = 1
 
 if __name__ == '__main__':
 	env = Cannon(graphics=True)

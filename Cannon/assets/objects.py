@@ -59,11 +59,11 @@ class Ball:
 
 	def __init__(self,WIN_WIDTH,max_y):
 		self.WIN_WIDTH = WIN_WIDTH
-		self.radius = 25
+		self.radius = 22
 		self.center = [
 			randint(self.MAX_RADIUS, WIN_WIDTH-self.MAX_RADIUS), randint(max_y-100, max_y-50)]
 		self.surf = pygame.Surface((50, 50), pygame.SRCALPHA)
-		pygame.draw.circle(self.surf, (255,0,0), (25, 25), self.radius)
+		pygame.draw.circle(self.surf, (153, 0, 255), (25, 25), self.radius)
 		self.mask = pygame.mask.from_surface(self.surf)
 		self.rect = self.surf.get_rect(center=self.center)
 		self.yvel = 5
@@ -82,7 +82,7 @@ class Bullet:
 	def __init__(self, x, y, angle,WIN_WIDTH):
 		self.WIN_WIDTH = WIN_WIDTH
 		self.surf = pygame.Surface((20, 20), pygame.SRCALPHA)
-		pygame.draw.circle(self.surf, (247, 136, 25), (10, 10), 10)
+		pygame.draw.circle(self.surf, (255, 51, 0), (10, 10), 10)
 		self.mask = pygame.mask.from_surface(self.surf)
 		x, y = x+50*sin(pi*(angle/180)), y-50*cos(pi*(angle/180))
 		self.rect = self.surf.get_rect(center=(x, y))

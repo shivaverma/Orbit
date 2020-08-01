@@ -3,7 +3,6 @@
 
 import random
 import turtle
-from tkinter import PhotoImage
 
 class Jump:
 
@@ -195,12 +194,16 @@ class Jump:
         self.run_frame()
         self.reward += .1
 
-        state = [i.xcor()*.01 for i in self.obs] + [i.ycor()*.01 for i in self.obs] + [int(self.triggered)]
+        # reward on terminating
+        if self.done:
+            self.reward -= 20
+
+        state = [i.xcor()*.01 for i in self.obs] + [i.ycor()*.01 for i in self.obs] + [self.t_rex.ycor()*.01]
         return self.reward, state, self.done
 
 
 # ------------------------ Human control ------------------------
 
-env = Jump()
-while 1:
-    env.run_frame()
+# env = Jump()
+# while 1:
+#     env.run_frame()
