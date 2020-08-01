@@ -77,17 +77,21 @@ class DQN:
 def train_dqn(episode):
 
     loss = []
-    agent = DQN(3, 5)
+
+    action_space = 3
+    state_space = 5
+    max_steps = 1000
+
+    agent = DQN(action_space, state_space)
     for e in range(episode):
         state = env.reset()
-        state = np.reshape(state, (1, 5))
+        state = np.reshape(state, (1, state_space))
         score = 0
-        max_steps = 1000
         for i in range(max_steps):
             action = agent.act(state)
             reward, next_state, done = env.step(action)
             score += reward
-            next_state = np.reshape(next_state, (1, 5))
+            next_state = np.reshape(next_state, (1, state_space))
             agent.remember(state, action, reward, next_state, done)
             state = next_state
             agent.replay()

@@ -11,15 +11,14 @@ Orbit is a open-source project and a collection of reinforcement learning enviro
 Orbit contains following RL environments as of today.
 
 ---
-## Environment 1: Paddle
+
+# Environment 1: Paddle
 
 ### Author: [Shiva Verma](https://www.linkedin.com/in/shiva-verma/)
 
-The task is to hit the ball with paddle. Inbuilt `turtle` library is used to create the environment.
+The task is to take the ball on paddle. Inbuilt `turtle` library is used to create the environment.
 
 <img src=Paddle/wall.gif width="400">
-
----
 
 **Action space (3)**
 
@@ -35,23 +34,19 @@ The task is to hit the ball with paddle. Inbuilt `turtle` library is used to cre
 
 **Reward function**
 
-|  Reward  | Description |
-| :-----------: | :-----------: |
-| **+3** | when paddle hit the ball |
-| **-3**   | when ball touchs the ground        |
-| **-0.1**      | when paddle moves     |
+- **`+3.0`** - when paddle hit the ball
+- **`-3.0`** - when ball touchs the ground
+- **`-0.1`** - when paddle moves
 
 **Episode termination**
 
 - Episode ends when ball touchs the ground.
 
----
-
-## Environment 2: Jump
+# Environment 2: Jump
 
 ### Author: [Vinod Kumar](https://www.linkedin.com/in/vinodkumar96/)
 
-The task to dodge the box from moving balls. Inbuilt `turtle` library is used to create the environment.
+The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is used to create the environment.
 
 <img src=Jump/wall.gif width="600">
 
@@ -62,20 +57,21 @@ The task to dodge the box from moving balls. Inbuilt `turtle` library is used to
 
 **State space (13)**
 
-- y position of box
+- y position of kangaroo
 - x and y position of all moving ball
 
 **Reward function**
 
-|  Reward  | Description |
-| :-----------: | :-----------: |
-| **+5** | when box dodge a ball |
-| **+0.1**   | for each time step        |
+- **`+5.0`** - when kangaroo dodge a ball
+- **`-1.0`** - for each jump
+- **`+0.1`** - for each time step 
 
 **Episode termination**
 
-- Episode ends when box touchs a ball.
+- Episode ends when kangaroo touchs a ball.
 
----
+# Environment 3: Cannon 
 
-## Environment 3: (Coming Soon...)
+### Author: [Sathish Kumar](https://www.linkedin.com/in/sathish-kumar-elangovan-1a5379168/)
+
+### (Coming Soon...)
