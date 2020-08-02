@@ -8,7 +8,7 @@ Orbit is a open-source project and a collection of reinforcement learning enviro
 - **`keras`** -  `2.4.3`
 - **`tensorflow`** -  `2.2.0`
 
-Orbit contains following RL environments as of today.
+Chekout `random_policy.py` to see how to use a environment. Orbit contains following RL environments as of today.
 
 ---
 
