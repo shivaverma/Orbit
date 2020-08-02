@@ -145,8 +145,8 @@ class Paddle():
 
 
 # ------------------------ Human control ------------------------
-
-env = Paddle()
-
-while True:
-     env.run_frame()
+#
+# env = Paddle()
+#
+# while True:
+#      env.run_frame()

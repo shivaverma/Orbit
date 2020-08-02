@@ -1,13 +1,20 @@
-import numpy as np
-from cannon import Cannon
+# this is a example code on how to use the environment.
+# this code follow a random policy, means executes the random actions.
 
-env = Cannon()
+
+import numpy as np
+
+# import the env class
+from Paddle.paddle import Paddle
+
+# create an object of env class
+env = Paddle()
 np.random.seed(0)
 
 def random_policy(episode):
 
     action_space = 3
-    state_space = 8
+    state_space = 5
     max_steps = 1000
 
     for e in range(episode):
