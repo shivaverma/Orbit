@@ -74,4 +74,30 @@ The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is us
 
 ### Author: [Sathish Kumar](https://www.linkedin.com/in/sathish-kumar-elangovan-1a5379168/)
 
-### (Coming Soon...)
+The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is used to create the environment.
+
+<img src=Cannon/wall.gif width="600">
+
+**Action space (2)**
+
+- **`0`** - rotate left
+- **`1`** - rotate right
+- **`2`** - shoot bullet
+- **`3`** - do nothing
+
+**State space (13)**
+
+- x position of cannon
+- x and y position of all balls
+- `sin` of angle of cannon
+
+**Reward function**
+
+- **`+5.0`** - hitting the bullet
+- **`-0.5`** - for shooting bullet
+- **`-0.1`** - for rotating canon 
+- **`-5.0`** - episode termination 
+
+**Episode termination**
+
+- Episode ends when a ball touchs the line.
