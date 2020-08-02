@@ -74,22 +74,22 @@ The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is us
 
 ### Author: [Sathish Kumar](https://www.linkedin.com/in/sathish-kumar-elangovan-1a5379168/)
 
-The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is used to create the environment.
+The task to hit the dropping balls. `pygame` library is used to create the environment.
 
-<img src=Cannon/wall.gif width="600">
+<img src=Cannon/wall.gif width="400">
 
-**Action space (2)**
+**Action space (4)**
 
 - **`0`** - rotate left
 - **`1`** - rotate right
 - **`2`** - shoot bullet
 - **`3`** - do nothing
 
-**State space (13)**
+**State space (8)**
 
 - x position of cannon
 - x and y position of all balls
-- `sin` of angle of cannon
+- sin of angle of cannon
 
 **Reward function**
 
