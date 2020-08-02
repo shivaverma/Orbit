@@ -76,7 +76,7 @@ The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is us
 
 The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is used to create the environment.
 
-<img src=Cannon/wall.gif width="600">
+<img src=Cannon/wall.gif width="400">
 
 **Action space (2)**
 
