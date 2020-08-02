@@ -74,7 +74,7 @@ The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is us
 
 ### Author: [Sathish Kumar](https://www.linkedin.com/in/sathish-kumar-elangovan-1a5379168/)
 
-The task to dodge the kangaroo from moving balls. Inbuilt `turtle` library is used to create the environment.
+The task to hit the dropping balls. `pygame` library is used to create the environment.
 
 <img src=Cannon/wall.gif width="400">
 
