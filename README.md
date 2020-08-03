@@ -95,9 +95,9 @@ The task to hit the dropping balls. `pygame` library is used to create the envir
 
 **Reward function**
 
-- **`+5.0`** - hitting the bullet
-- **`-0.5`** - for shooting bullet
-- **`-0.1`** - for rotating canon 
+- **`+5.0`** - hitting the ball
+- **`-0.5`** - shooting bullet
+- **`-0.1`** - rotating canon 
 - **`-5.0`** - episode termination 
 
 **Episode termination**
