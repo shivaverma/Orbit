@@ -31,11 +31,6 @@ to destination. This applies respectively to agent B.
 [![Watch on youtube](https://img.youtube.com/vi/FCwGNRiq9SY/hqdefault.jpg)](https://youtu.be/FCwGNRiq9SY)
 
 
-
-###  Discrete mathematics approach
-
-This uses the y = mx + c approach to forecast new ball locations
-
 ### To run program follow the process below:
 
 
