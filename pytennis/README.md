@@ -2,7 +2,7 @@
 An implementation of a reinforcement learning environment for tennis games using Deep Q Network (DQN)
 
 
-![gif](Images/pytennis.gif)
+![gif](Video/pytennis.gif)
 
 
 ### Pytennis Environment Description
