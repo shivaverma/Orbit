@@ -31,21 +31,4 @@ to destination. This applies respectively to agent B.
 [![Watch on youtube](https://img.youtube.com/vi/cMp_zF8zzsA/hqdefault.jpg)](https://youtu.be/cMp_zF8zzsA)
 
 
-### To run program follow the process below:
-
-
-To clone the work and run the main.py file using the following commands below
-
-``` 
-git clone https://github.com/elishatofunmi/pytennis-Deep-Q-Network-DQN-.git
-
-cd "pytennis-Deep-Q-Network-DQN-"
-
-pip install -r requirements.txt
-
-python main.py
-
-```
-
-
 
