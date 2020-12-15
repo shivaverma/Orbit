@@ -103,9 +103,3 @@ The task to hit the dropping balls. `pygame` library is used to create the envir
 **Episode termination**
 
 - Episode ends when a ball touchs the line.
-
-# Environment 4: Tennis 
-
-### Author: [Elisha Odemakinde](https://www.linkedin.com/in/elisha-odemakinde-366705150/)
-
-### Coming Soon ...
