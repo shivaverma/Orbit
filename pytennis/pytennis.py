@@ -12,7 +12,6 @@ from keras import Sequential, layers
 from keras.optimizers import Adam
 from keras.layers import Dense
 from collections import deque
-
 pygame.init()
 
 
@@ -27,7 +26,7 @@ class tennis:
         self.lossA = 0
         self.lossB = 0
         self.restart = False
-
+        self.iteration = 0
         self.AgentA = DQN()
         self.AgentB = DQN()
 
@@ -47,6 +46,8 @@ class tennis:
 
         self.FPS = fps
         self.fpsClock = pygame.time.Clock()
+
+        self.nextplayer = np.random.choice(['A', 'B'])
 
     def setWindow(self):
 
@@ -97,11 +98,11 @@ class tennis:
         val =  (action*500) + 50
         return val
 
-    def step(self, action, count=0, step = 'A'):
-        # Step = A implies compute player A's next step.
-        # Step = B implies compute player B's next step.
+    def play(self, action, count=0, play = 'A'):
+        # play = A implies compute player A's next play.
+        # play = B implies compute player B's next play.
         
-        if step == 'A':
+        if play == 'A':
             # playerA should play
             if count == 0:
                 self.NetworkA = self.net.network(
@@ -185,8 +186,8 @@ class tennis:
             actionB = self.AgentB.epsilon_greedy(q_valueB, iteration)
 
             # Online DQN plays
-            obsB, rewardB, doneB, infoB = self.step(
-                action=actionB, count=count, step = 'B')
+            obsB, rewardB, doneB, infoB = self.play(
+                action=actionB, count=count, play = 'B')
             next_stateB = actionB
 
             # Let's memorize what just happened
@@ -207,8 +208,8 @@ class tennis:
             actionA = self.AgentA.epsilon_greedy(q_valueA, iteration)
 
             # Online DQN plays
-            obsA, rewardA, doneA, infoA = self.step(
-                action=actionA, count=count, step = 'A')
+            obsA, rewardA, doneA, infoA = self.play(
+                action=actionA, count=count, play = 'A')
             next_stateA = actionA
 
             # Let's memorize what just happened
@@ -249,7 +250,32 @@ class tennis:
 
         return True
 
-    def render(self):
+    def show_board(self):
+        self.display()
+        # CHECK BALL MOVEMENT
+        self.DISPLAYSURF.blit(self.PLAYERA, (self.playerax, 50))
+        self.DISPLAYSURF.blit(self.PLAYERB, (self.playerbx, 650))
+        self.DISPLAYSURF.blit(self.ball, (self.ballx, self.bally))
+        self.DISPLAYSURF.blit(self.randNumLabelA, (20, 15))
+        self.DISPLAYSURF.blit(self.randNumLabelB, (450, 15))
+
+
+        pygame.display.update()
+        self.fpsClock.tick(self.FPS)
+
+        for event in pygame.event.get():
+
+            if event.type == QUIT:
+                # self.AgentA.model.save('models/AgentA.h5')
+                # self.AgentB.model.save('models/AgentB.h5')
+                pygame.quit()
+                sys.exit()
+        return 
+
+
+    def step(self, action):
+        # stepOutput: reward, next_state, done
+        # action represents the next player to player, action can either be {playerA:0, playerB: 1}
         # diplay team players
         self.PLAYERA = pygame.image.load('Images/padB.png')
         self.PLAYERA = pygame.transform.scale(self.PLAYERA, (50, 50))
@@ -264,8 +290,6 @@ class tennis:
         self.ballx = 250
         self.bally = 300
 
-        count = 0
-        nextplayer = 'A'
         # player A starts by playing with state 0
         obsA, rewardA, doneA, infoA = 0, False, False, ''
         obsB, rewardB, doneB, infoB = 0, False, False, ''
@@ -274,29 +298,23 @@ class tennis:
         stateB = 0
         next_stateA = 0
         next_stateB = 0
-
+        iteration = self.iteration
         actionA = 0
         actionB = 0
-
-        iterations = 20000
-        iteration = 0
         restart = False
 
-        while iteration < iterations:
+        
+        self.display()
+        self.randNumLabelA = self.myFontA.render(
+            'Score A: '+str(self.updateRewardA), 1, self.BLACK)
+        self.randNumLabelB = self.myFontB.render(
+            'Score B: '+str(self.updateRewardB), 1, self.BLACK)
 
-            self.display()
-            self.randNumLabelA = self.myFontA.render(
-                'Score A: '+str(self.updateRewardA), 1, self.BLACK)
-            self.randNumLabelB = self.myFontB.render(
-                'Score B: '+str(self.updateRewardB), 1, self.BLACK)
-            
-            if nextplayer == 'A':
+        nextplayer = self.nextplayer
 
+        if self.nextplayer == 'A':
+            for count in range(50):
                 if count == 0:
-                    print('state: ', state)
-                    print('iteration: ', iteration)
-                    print('count: ', count)
-                    print('player: ', nextplayer)
                     output = self.execute(state, iteration, count, player = nextplayer)
                     q_valueA, actionA, obsA, rewardA, doneA, infoA, next_stateA,  actionA, stateA = output
                     state = next_stateA
@@ -315,7 +333,7 @@ class tennis:
                     if rewardA == 0:
                         self.restart = True
                         time.sleep(0.5)
-                        nextplayer = 'B'
+                        self.nextplayer = 'B'
                         self.GeneralReward = False
                     else:
                         self.restart = False
@@ -324,23 +342,20 @@ class tennis:
                     # Sample memories and use the target DQN to produce the target Q-Value
                     self.trainOnlineDQN(player = 'A')
 
-                    nextplayer = 'B'
+                    self.nextplayer = 'B'
                     self.updateIter += 1
 
-                    count = 0
-                    # evaluate A
 
                 else:
                     output = self.execute(state, iteration, count, player = 'A')
                     q_valueA, actionA, obsA, rewardA, doneA, infoA, next_stateA,  actionA, stateA = output
                     state = next_stateA
 
-                if nextplayer == 'A':
-                    count += 1
-                else:
-                    count = 0
+                stepOutput = rewardA, next_stateA, doneA
+                self.show_board()
 
-            else:
+        else:
+            for count in range(50):
                 if count == 0:
                     output = self.execute(state, iteration, count, player = 'B')
                     q_valueB, actionB, obsB, rewardB, doneB, infoB, next_stateB,  actionB, stateB = output
@@ -360,7 +375,7 @@ class tennis:
                         self.restart = True
                         time.sleep(0.5)
                         self.GeneralReward = False
-                        nextplayer = 'A'
+                        self.nextplayer = 'A'
                     else:
                         self.restart = False
                         self.GeneralReward = True
@@ -368,7 +383,7 @@ class tennis:
                     # Sample memories and use the target DQN to produce the target Q-Value
                     self.trainOnlineDQN(player = 'B')
 
-                    nextplayer = 'A'
+                    self.nextplayer = 'A'
                     self.updateIter += 1
                     # evaluate B
 
@@ -377,35 +392,37 @@ class tennis:
                     q_valueB, actionB, obsB, rewardB, doneB, infoB, next_stateB,  actionB, stateB = output
                     state = next_stateB
 
-                if nextplayer == 'B':
-                    count += 1
-                else:
-                    count = 0
+                stepOutput = rewardA, next_stateA, doneA
+                
+                self.show_board() 
 
-            iteration += 1
+        self.iteration += 1 # keep track of the total number of iterations conducted
+        return stepOutput
 
-            # CHECK BALL MOVEMENT
-            self.DISPLAYSURF.blit(self.PLAYERA, (self.playerax, 50))
-            self.DISPLAYSURF.blit(self.PLAYERB, (self.playerbx, 650))
-            self.DISPLAYSURF.blit(self.ball, (self.ballx, self.bally))
-            self.DISPLAYSURF.blit(self.randNumLabelA, (20, 15))
-            self.DISPLAYSURF.blit(self.randNumLabelB, (450, 15))
+    
 
+def random_policy(episode):
 
-            pygame.display.update()
-            self.fpsClock.tick(self.FPS)
+    action_space = 3
+    state_space = 5
+    max_steps = 1000
 
-            for event in pygame.event.get():
+    for e in range(episode):
+        state = env.reset()
+        score = 0
 
-                if event.type == QUIT:
-                    # self.AgentA.model.save('models/AgentA.h5')
-                    # self.AgentB.model.save('models/AgentB.h5')
-                    pygame.quit()
-                    sys.exit()
-
+        for i in range(max_steps):
+            action = np.random.randint(action_space)
+            reward, next_state, done = env.step(action)
+            score += reward
+            state = next_state
+            if done:
+                print("episode: {}/{}, score: {}".format(e, episode, score))
+                break
 
 
 if __name__ == "__main__":
-    tennis = tennis(fps=70)
-    tennis.reset()
-    tennis.render()
+    env = tennis(fps=70)
+    action_space = 2
+    score = 0
+    random_policy(10)
