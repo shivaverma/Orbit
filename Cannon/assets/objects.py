@@ -28,17 +28,19 @@ class Plank:
 	def __init__(self,WIN_WIDTH,WIN_HEIGHT):
 		self.WIN_WIDTH = WIN_WIDTH
 		self.WIN_HEIGHT = WIN_HEIGHT
-		self.xvel = 1
+		self.xvel = randint(1, 3)
+		if randint(0, 1):
+			self.xvel *= -1
 		self.rect = pygame.Rect(0, 0, self.PLANK_WIDTH, self.PLANK_HEIGHT)
 		self.rect.center = (WIN_WIDTH/2, WIN_HEIGHT-50)
 		self.cannon = pygame.transform.scale(
-			pygame.image.load(os.path.join('assets', 'imgs', 'cannon.png')),
+			pygame.image.load(os.path.join('Cannon', 'assets', 'imgs', 'cannon.png')),
 			(80, 110)
 		)
 
 	def move(self):
 		if self.rect.right >= self.WIN_WIDTH or self.rect.left <= 0:
-			if abs(self.xvel)<5:
+			if abs(self.xvel)<3:
 				self.xvel = -1.3*self.xvel
 			else:
 				self.xvel = -self.xvel
@@ -61,12 +63,12 @@ class Ball:
 		self.WIN_WIDTH = WIN_WIDTH
 		self.radius = 22
 		self.center = [
-			randint(self.MAX_RADIUS, WIN_WIDTH-self.MAX_RADIUS), randint(max_y-100, max_y-50)]
+			randint(self.MAX_RADIUS, WIN_WIDTH-self.MAX_RADIUS), randint(max_y-150, max_y-100)]
 		self.surf = pygame.Surface((50, 50), pygame.SRCALPHA)
 		pygame.draw.circle(self.surf, (153, 0, 255), (25, 25), self.radius)
 		self.mask = pygame.mask.from_surface(self.surf)
 		self.rect = self.surf.get_rect(center=self.center)
-		self.yvel = 5
+		self.yvel = 3
 
 	def move(self):
 		self.rect.move_ip(0, self.yvel)
@@ -80,6 +82,7 @@ class Bullet:
 	VEL = 10
 
 	def __init__(self, x, y, angle,WIN_WIDTH):
+		self.angle = angle
 		self.WIN_WIDTH = WIN_WIDTH
 		self.surf = pygame.Surface((20, 20), pygame.SRCALPHA)
 		pygame.draw.circle(self.surf, (255, 51, 0), (10, 10), 10)

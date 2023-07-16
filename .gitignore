@@ -1,6 +1,8 @@
 **/__pycache__
+*weights*
 .DS_Store
 .idea/
 Cannon/.DS_Store
 Cannon/assets/.DS_Store
+*logs*
 Jump/.DS_Store
